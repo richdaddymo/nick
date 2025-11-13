@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktives Sprint-Board: KI-Setter Funnel</title>
+    <!-- Einbindung von Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Einbindung von Heroicons für die Checkboxen und Pfeile -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Tailwind bg-gray-100 */
+        }
+        .task-card {
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #e5e7eb; /* Tailwind border-gray-200 */
+        }
+        .task-card:last-child {
+            border-bottom: none;
+        }
+        
+        /* Stile für erledigte Aufgaben */
+        .completed-card {
+            background-color: #f0fdf4; /* Tailwind bg-green-50 */
+            opacity: 0.75;
+        }
+        .completed-text .font-medium {
+            text-decoration: line-through;
+            color: #6b7280; /* Tailwind text-gray-500 */
+        }
+
+        /* Checkbox-Stile */
+        .task-checkbox {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            color: #9ca3af; /* Tailwind text-gray-400 */
+            flex-shrink: 0;
+        }
+        .task-checkbox:hover {
+            color: #10b981; /* Tailwind text-green-500 */
+        }
+        .task-checkbox.checked {
+            color: #10b981; /* Tailwind text-green-500 */
+        }
+
+        /* Dropdown-Stile */
+        .task-trigger {
+            cursor: pointer;
+        }
+        .dropdown-arrow {
+            transition: transform 0.2s ease-in-out;
+        }
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+        .task-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding-left: 3.5rem; /* Einrückung passend zur Checkbox */
+            padding-right: 1rem;
+        }
+        .task-details.open {
+            max-height: 500px; /* Ausreichend Höhe für den Inhalt */
+            padding-top: 0;
+            padding-bottom: 1rem;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-7xl mx-auto">
+
+        <!-- Header -->
+        <div class="mb-8 p-6 bg-white rounded-lg shadow-md">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Master-Board: KI-Setter Funnel (14-Tage-Sprint)</h1>
+            <p class="text-lg text-gray-700">
+                <strong>Ziel:</strong> Erstellung eines vollständigen, verkaufsfähigen Funnels (Landingpage + Sofort-Anruf-Demo), bereit für Ad-Traffic von David.
+            </p>
+        </div>
+
+        <!-- Beteiligte -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Beteiligte</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-lg shadow flex items-center space-x-3">
+                    <span class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">I</span>
+                    <div>
+                        <div class="font-semibold text-gray-900">Ibrahim (Du)</div>
+                        <div class="text-sm text-gray-500">Projektleitung, Finale Freigabe</div>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow flex items-center space-x-3">
+                    <span class="flex-shrink-0 w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center font-bold">N</span>
+                    <div>
+                        <div class="font-semibold text-gray-900">Nick</div>
+                        <div class="text-sm text-gray-500">Techn. Leitung & Steuerung Farouk</div>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow flex items-center space-x-3">
+                    <span class="flex-shrink-0 w-10 h-10 rounded-full bg-yellow-500 text-white flex items-center justify-center font-bold">F</span>
+                    <div>
+                        <div class="font-semibold text-gray-900">Farouk</div>
+                        <div class="text-sm text-gray-500">Umsetzung Landingpage</div>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow flex items-center space-x-3">
+                    <span class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold">D</span>
+                    <div>
+                        <div class="font-semibold text-gray-900">David</div>
+                        <div class="text-sm text-gray-500">Verantwortung Ads (Extern)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projekt-Phasen -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            
+            <!-- Phase 1 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="p-5 bg-blue-50 border-b border-blue-200">
+                    <h3 class="text-xl font-semibold text-blue-800">Phase 1: Sprint-Setup & Landingpage</h3>
+                    <p class="text-sm text-blue-600">Tag 1 - 6 | Gesamtaufwand: ca. 8.5 - 9.5 Std.</p>
+                </div>
+                <div class="divide-y divide-gray-200">
+                    <!-- Task 1.1 -->
+                    <div class="task-card">
+                        <div class="p-4 flex items-start space-x-4">
+                            <ion-icon name="square-outline" class="task-checkbox mt-1" data-icon-unchecked="square-outline" data-icon-checked="checkbox-outline"></ion-icon>
+                            <div class="task-trigger flex-1 flex justify-between items-center">
+                                <div class="task-text flex-1">
+                                    <div class="font-medium text-gray-800">1.1: Trello-Briefing & Vorlagen-Check</div>
+                                    <div class="text-sm text-gray-500">Verantwortung: Nick | Zeit: 1 Std.</div>
+                                </div>
+                                <ion-icon name="chevron-down-outline" class="dropdown-arrow w-5 h-5 text-gray-400 flex-shrink-0"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="task-details">
+                            <p class="text-sm text-gray-600">Nick erstellt die Trello-Karte, prüft die Vorlage 8608 und stellt sicher, dass Farouk Zugriff hat (ggf. Screenshots erstellen).</p>
+                        </div>
+                    </div>
+                    <!-- Task 1.2 -->
+                    <div class="task-card">
+                        <div class="p-4 flex items-start space-x-4">
+                            <ion-icon name="square-outline" class="task-checkbox mt-1" data-icon-unchecked="square-outline" data-icon-checked="checkbox-outline"></ion-icon>
+                            <div class="task-trigger flex-1 flex justify-between items-center">
+                                <div class="task-text flex-1">
+                                    <div class="font-medium text-gray-800">1.2: Strukturvorgaben LP</div>
+                                    <div class="text-sm text-gray-500">Verantwortung: Nick an Farouk | Zeit: (in 1.1)</div>
+                                </div>
+                                <ion-icon name="chevron-down-outline" class="dropdown-arrow w-5 h-5 text-gray-400 flex-shrink-0"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="task-details">
+                            <p class="text-sm text-gray-600">Nick definiert die genaue Struktur, Sektionen (Hero, Pain, Solution, CTA) und Inhalte für Farouk.</p>
+                        </div>
+                    </div>
+                    <!-- Task 1.3 -->
+                    <div class="task-card">
+                        <div class="p-4 flex items-start space-x-4">
+                            <ion-icon name="square-outline" class="task-checkbox mt-1" data-icon-unchecked="square-outline" data-icon-checked="checkbox-outline"></ion-icon>
+                            <div class="task-trigger flex-1 flex justify-between items-center">
+                                <div class="task-text flex-1">
+                                    <div class="font-medium text-gray-800">1.3: LP Entwurf V1</div>
+                                    <div class="text-sm text-gray-500">Verantwortung: Farouk | Zeit: 4 Std.</div>
+                                </div>
+                                <ion-icon name="chevron-down-outline" class="dropdown-arrow w-5 h-5 text-gray-400 flex-shrink-0"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="task-details">
+                            <p class="text-sm text-gray-600">Farouk baut den ersten Entwurf der Landingpage basierend auf Nicks Vorgaben im Draft-Modus.</p>
+                        </div>
+                    </div>
+                    <!-- Task 1.4 -->
+                    <div class="task-card">
+                        <div class="p-4 flex items-start space-x-4">
+                            <ion-icon name="square-outline" class="task-checkbox mt-1" data-icon-unchecked="square-outline" data-icon-checked="checkbox-outline"></ion-icon>
+                            <div class="task-trigger flex-1 flex justify-between items-center">
+                                <div class="task-text flex-1">
+                                    <div class="font-medium text-gray-800">1.4: Review 1</div>
+                                    <div class="text-sm text-gray-500">Verantwortung: Nick + Farouk | Zeit: 1.5 Std.</div>
+                                </div>
+                                <ion-icon name="chevron-down-outline" class="dropdown-arrow w-5 h-5 text-gray-400 flex-shrink-0"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="task-details">
+                            <p class="text-sm text-gray-600">Gemeinsames Review via Screen-Sharing. Prüfung von Layout, Abständen, Mobile-Ansicht und Struktur.</p>
+                        </div>
+                    </div>
+                    <!-- Task 1.5 -->
+                    <div class="task-card">
+                        <div class="p-4 flex items-start space-x-4">
+                            <ion-icon name="square-outline" class="task-checkbox mt-1" data-icon-unchecked="square-outline" data-icon-checked="checkbox-outline"></ion-icon>
+                            <div class="task-trigger flex-1 flex justify-between items-center">
+                                <div class="task-text flex-1">
+                                    <div class="font-medium text-gray-800">1.5: Review 2 & Finales Feedback</div>
+                                    <div class="text-sm text-gray-500">Verantwortung: Nick + Ibrahim | Zeit: 1 Std.</div>
+                                </div>
+                                <ion-icon name="chevron-down-outline" class="dropdown-arrow w-5 h-5 text-gray-400 flex-shrink-0"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="task-details">
+                            <p class="text-sm text-gray-600">Nick präsentiert Ibrahim den Entwurf. Ibrahim gibt finales Feedback für die letzten Anpassungen.</p>
+                        </div>
+                    </div>
+                    <!-- Task 1.6 -->
+                    <div class="task-card">
+                        <div class="p-4 flex items-start space-x-4">
+                            <ion-icon name="square-outline" class="task-checkbox mt-1" data-icon-unchecked="square-outline" data-icon-checked="checkbox-outline"></ion-icon>
+                            <div class="task-trigger flex-1 flex justify-between items-center">
+                                <div class="task-text flex-1">
+                                    <div class="font-medium text-gray-800">1.6: LP Finalisierung</div>
+                                    <div class="text-sm text-gray-500">Verantwortung: Farouk (Abn. Nick) | Zeit: 1 - 2 Std.</div>
+                                </div>
+                                <ion-icon name="chevron-down-outline" class="dropdown-arrow w-5 h-5 text-gray-400 flex-shrink-0"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="task-details">
+                            <p class="text-sm text-gray-600">Farouk setzt das finale Feedback um. Nick prüft und nimmt die Landingpage ab.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="p-5 bg-yellow-50 border-b border-yellow-200">
+                    <h3 class="text-xl font-semibold text-yellow-800">Phase 2: Funnel & Routing</h3>
+                    <p class="text-sm text-yellow-600">Tag 7 - 9 | Gesamtaufwand: ca. 7.5 Std.</p>
+                </div>
+                <div class="divide-y divide-gray-200">
+                    <!-- Task 2.1 -->
+                    <div class="task-card">
+                        <div class="p-4 flex items-start space-x-4">
+                            <ion-icon name="square-outline" class="task-checkbox mt-1" data-icon-unchecked="square-outline" data-icon-checked="checkbox-outline"></ion-icon>
+                            <div class="task-trigger flex-1 flex justify-between items-center">
+                                <div class="task-text flex-1">
+                                    <div class="font-medium text-gray-800">2.1: Funnel-Formular erstellen</div>
+                                    <div class="text-sm text-gray-500">Verantwortung: Nick | Zeit: 3 Std.</div>
+                                </div>
+                                <ion-icon name="chevron-down-outline" class="dropdown-arrow w-5 h-5 text-gray-400 flex-shrink-0"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="task-details">
+                            <p class="text-sm text-gray-600">Aufbau des Formulars (Name, Tel, E-Mail, Firma). Implementierung von Hidden Fields für das Ad-Tracking (UTMs). Erstellung der Danke-Seite ("KI-Setter ruft Sie jetzt an...").</p>
+                        </div>
+                    </div>
+                    <!-- Task 2.2 -->
+                    <div class="task-card">
+                        <div class="p-4 flex items-start space-x-4">
+                            <ion-icon name="square-outline" class="task-checkbox mt-1" data-icon-unchecked="square-outline" data-icon-checked="checkbox-outline"></ion-icon>
+                            <div class="task-trigger flex-1 flex justify-between items-center">
+                                <div class="task-text flex-1">
+                                    <div class="font-medium text-gray-800">2.2: n8n Routing & Validierung</div>
+                                    <div class="text-sm text-gray-500">Verantwortung: Nick | Zeit: 2.5 Std.</div>
+                                </div>
+                                <ion-icon name="chevron-down-outline" class="dropdown-arrow w-5 h-5 text-gray-400 flex-shrink-0"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="task-details">
+                            <p class="text-sm text-gray-600">Einrichtung des n8n-Workflows: Formular-Webhook empfangen, Daten validieren (z.B. Telefonnummernformat) und Logging in ein Google Sheet/Datenbank.</p>
+                        </div>
+                    </div>
+                    <!-- Task 2.3 -->
+                    <div class="task-card">
+                        <div class="p-4 flex items-start space-x-4">
+                            <ion-icon name="square-outline" class="task-checkbox mt-1" data-icon-unchecked="square-outline" data-icon-checked="checkbox-outline"></ion-icon>
+                            <div class="task-trigger flex-1 flex justify-between items-center">
+                                <div class="task-text flex-1">
+                                    <div class="font-medium text-gray-800">2.3: Sofort-Anruf-Trigger integrieren</div>
+                                    <div class="text-sm text-gray-500">Verantwortung: Nick | Zeit: 2 Std.</div>
+                                </div>
+                                <ion-icon name="chevron-down-outline" class="dropdown-arrow w-5 h-5 text-gray-400 flex-shrink-0"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="task-details">
+                            <p class="text-sm text-gray-600">Anbindung des n8n-Workflows an die KI-Setter-API (z.B. VAPI). Sicherstellen, dass der Anruf zuverlässig nach der Validierung ausgelöst wird.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="p-5 bg-purple-50 border-b border-purple-200">
+                    <h3 class="text-xl font-semibold text-purple-800">Phase 3: Demo-Flow & Testing</h3>
+                    <p class="text-sm text-purple-600">Tag 10 - 13 | Gesamtaufwand: ca. 8 Std.</p>
+                </div>
+                <div class="divide-y divide-gray-200">
+                    <!-- Task 3.1 -->
+                    <div class="task-card">
+                        <div class="p-4 flex items-start space-x-4">
+                            <ion-icon name="square-outline" class="task-checkbox mt-1" data-icon-unchecked="square-outline" data-icon-checked="checkbox-outline"></ion-icon>
+                            <div class="task-trigger flex-1 flex justify-between items-center">
+                                <div class="task-text flex-1">
+                                    <div class="font-medium text-gray-800">3.1: Live-Demo-Flow optimieren</div>
+                                    <div class="text-sm text-gray-500">Verantwortung: Nick | Zeit: 3 Std.</div>
+                                </div>
+                                <ion-icon name="chevron-down-outline" class="dropdown-arrow w-5 h-5 text-gray-400 flex-shrink-0"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="task-details">
+                            <p class="text-sm text-gray-600">Feinschliff des KI-Setter-Skripts für den Demo-Anruf. Das Ziel ist, den Nutzen (Sofort-Kontakt) klar zu demonstrieren und Interesse am Produkt zu wecken.</p>
+                        </div>
+                    </div>
+                    <!-- Task 3.2 -->
+                    <div class="task-card">
+                        <div class="p-4 flex items-start space-x-4">
+                            <ion-icon name="square-outline" class="task-checkbox mt-1" data-icon-unchecked="square-outline" data-icon-checked="checkbox-outline"></ion-icon>
+                            <div class="task-trigger flex-1 flex justify-between items-center">
+                                <div class="task-text flex-1">
+                                    <div class="font-medium text-gray-800">3.2: Interne & Externe Tests</div>
+                                    <div class="text-sm text-gray-500">Verantwortung: Nick | Zeit: 3.5 Std.</div>
+                                </div>
+                                <ion-icon name="chevron-down-outline" class="dropdown-arrow w-5 h-5 text-gray-400 flex-shrink-0"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="task-details">
+                            <p class="text-sm text-gray-600">Durchführung von ca. 10 internen Tests (mit dem Team) und 10 externen Tests (Freunde/Bekannte), um den Flow unter realen Bedingungen zu prüfen.</p>
+                        </div>
+                    </div>
+                    <!-- Task 3.3 -->
+                    <div class="task-card">
+                        <div class="p-4 flex items-start space-x-4">
+                            <ion-icon name="square-outline" class="task-checkbox mt-1" data-icon-unchecked="square-outline" data-icon-checked="checkbox-outline"></ion-icon>
+                            <div class="task-trigger flex-1 flex justify-between items-center">
+                                <div class="task-text flex-1">
+                                    <div class="font-medium text-gray-800">3.3: End-to-End Test & Bugfixing</div>
+                                    <div class="text-sm text-gray-500">Verantwortung: Nick | Zeit: 1.5 Std.</div>
+                                </div>
+                                <ion-icon name="chevron-down-outline" class="dropdown-arrow w-5 h-5 text-gray-400 flex-shrink-0"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="task-details">
+                            <p class="text-sm text-gray-600">Finaler Test des gesamten Prozesses: Ad-Link (simuliert) -> Landingpage -> Formular -> n8n -> KI-Anruf -> Logging. Behebung letzter Fehler.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 4 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <div class="p-5 bg-green-50 border-b border-green-200">
+                    <h3 class="text-xl font-semibold text-green-800">Phase 4: Übergabe & Ad-Traffic</h3>
+                    <p class="text-sm text-green-600">Tag 14 | Gesamtaufwand: ca. 1 Std.</p>
+                </div>
+                <div class="divide-y divide-gray-200">
+                    <!-- Task 4.1 -->
+                    <div class="task-card">
+                        <div class="p-4 flex items-start space-x-4">
+                            <ion-icon name="square-outline" class="task-checkbox mt-1" data-icon-unchecked="square-outline" data-icon-checked="checkbox-outline"></ion-icon>
+                            <div class="task-trigger flex-1 flex justify-between items-center">
+                                <div class="task-text flex-1">
+                                    <div class="font-medium text-gray-800">4.1: Ads-Ready Übergabe</div>
+                                    <div class="text-sm text-gray-500">Verantwortung: Nick an David | Zeit: 1 Std.</div>
+                                </div>
+                                <ion-icon name="chevron-down-outline" class="dropdown-arrow w-5 h-5 text-gray-400 flex-shrink-0"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="task-details">
+                            <p class="text-sm text-gray-600">Nick bereitet alle finalen Assets für David vor: Finaler Landingpage-Link, Übersicht der UTM-Parameter für das Tracking und Infos zum Pixel-Event.</p>
+                        </div>
+                    </div>
+                    <!-- Task 4.2 -->
+                    <div class="task-card">
+                        <div class="p-4 flex items-start space-x-4">
+                            <ion-icon name="square-outline" class="task-checkbox mt-1" data-icon-unchecked="square-outline" data-icon-checked="checkbox-outline"></ion-icon>
+                            <div class="task-trigger flex-1 flex justify-between items-center">
+                                <div class="task-text flex-1">
+                                    <div class="font-medium text-gray-800">4.2: Ads-Start</div>
+                                    <div class="text-sm text-gray-500">Verantwortung: David | Zeit: (Extern)</div>
+                                </div>
+                                <ion-icon name="chevron-down-outline" class="dropdown-arrow w-5 h-5 text-gray-400 flex-shrink-0"></ion-icon>
+                            </div>
+                        </div>
+                        <div class="task-details">
+                            <p class="text-sm text-gray-600">David startet die Ad-Kampagnen. (Feedback von David: Optimiert aktuell Texte/Grafiken, Benni schaltet die Ads).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Management-Anweisung -->
+        <div class="mt-8 p-6 bg-white rounded-lg shadow-md border-l-4 border-indigo-500">
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">Management-Anweisung an Nick</h3>
+            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                <li>
+                    <strong>Checkliste:</strong> Erstelle eine detaillierte Checkliste (z.B. in Trello) für alle Tasks dieses Boards.
+                </li>
+                <li>
+                    <strong>Deadlines:</strong> Weise jedem Task eine klare Deadline zu (basierend auf den Sprint-Tagen).
+                </li>
+                <li>
+                    <strong>Reporting:</strong> Ergänze fehlende Punkte, falls dir etwas auffällt, und markiere Ibrahim (mich) dazu.
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Checkbox-Logik
+            const checkboxes = document.querySelectorAll('.task-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Verhindert, dass der Klick das Dropdown auslöst
+
+                    const isChecked = checkbox.classList.toggle('checked');
+                    const taskCard = checkbox.closest('.task-card');
+                    const taskTextContainer = taskCard.querySelector('.task-text');
+
+                    if (isChecked) {
+                        checkbox.setAttribute('name', checkbox.dataset.iconChecked);
+                        taskCard.classList.add('completed-card');
+                        if (taskTextContainer) {
+                            taskTextContainer.classList.add('completed-text');
+                        }
+                    } else {
+                        checkbox.setAttribute('name', checkbox.dataset.iconUnchecked);
+                        taskCard.classList.remove('completed-card');
+                        if (taskTextContainer) {
+                            taskTextContainer.classList.remove('completed-text');
+                        }
+                    }
+                });
+            });
+
+            // Dropdown-Logik
+            const triggers = document.querySelectorAll('.task-trigger');
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const details = trigger.closest('.task-card').querySelector('.task-details');
+                    const arrow = trigger.querySelector('.dropdown-arrow');
+                    
+                    details.classList.toggle('open');
+                    arrow.classList.toggle('rotate-180');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
